@@ -1,0 +1,56 @@
+<!--
+02 - Convert the 01-BasicJS.html to React
+03 - Use Babel for learning purpose to convert the JSX to JavaScript that the browser can understand
+04 - Using Functions to pass custom span texts
+05 - Use PropTypes to handle field data type validations
+06 - Use TickTok to understand the React Rerender functionality - Compare using JS and JSX 
+07 - React CSS - using custom styles
+08 - React Event Handling
+09 - useState hook to maintain the state for a component
+-->
+
+<body>
+    <div id="root"></div>
+    <script src="https://unpkg.com/react@17.0.0/umd/react.development.js">
+    </script>
+    <script src="https://unpkg.com/react-dom@17.0.0/umd/react-dom.development.js">
+    </script>
+    <script src="https://unpkg.com/@babel/standalone@7.17.0/babel.js">
+    </script>
+    <script type="text/babel">
+        const rootElem = document.getElementById("root");
+        function App(){
+            //states are managed independently of one another
+            const [name,setName] = React.useState('');
+            /*
+                const stateArray = React.useState('');
+                const name = stateArray[0];
+                const setName = stateArray[1];
+            */
+            const [clickCount,setClickCount] = React.useState(0);
+
+            function handleChange(event){
+                setName(event.target.value);
+            }
+
+            function handleClick(event){
+                setClickCount(clickCount+1);
+            }
+
+            return (
+                <div>
+                    <p><span>Event click count {clickCount}</span></p>
+                    <button onClick={handleClick}>Click Me</button>
+
+                    <form>
+                    <label htmlFor="name">Name:</label>
+                    <input id="name" onChange={handleChange} />
+                    </form>
+                    {(name) ? <b>Hello {name} !</b>:<p>Please enter a name...</p>}
+                </div>
+            );
+        }
+
+        ReactDOM.render(<App />,rootElem);
+    </script>
+</body>
