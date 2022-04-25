@@ -1,0 +1,19 @@
+<!--
+02 - Convert the 01-BasicJS.html to React
+-->
+
+<body>
+    <div id="root"></div>
+    <script src="https://unpkg.com/react@17.0.0/umd/react.development.js">
+    </script>
+    <script src="https://unpkg.com/react-dom@17.0.0/umd/react-dom.development.js">
+    </script>
+    <script type="text/javascript">
+        const rootElement = document.getElementById("root");
+        const newElement = React.createElement('div',{
+            children: React.createElement('span',null,'Hello First Program'),
+            className: 'new-class',
+        });
+        ReactDOM.render(newElement,rootElement);
+    </script>
+</body>

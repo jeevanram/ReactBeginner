@@ -1,0 +1,25 @@
+<!--
+02 - Convert the 01-BasicJS.html to React
+03 - Use Babel for learning purpose to convert the JSX to JavaScript that the browser can understand
+-->
+
+<body>
+        <div id="root"></div>
+        <script src="https://unpkg.com/react@17.0.0/umd/react.development.js">
+        </script>
+        <script src="https://unpkg.com/react-dom@17.0.0/umd/react-dom.development.js">
+        </script>
+        <script src="https://unpkg.com/@babel/standalone@7.17.0/babel.js">
+        </script>
+        <script type="text/babel">
+            const rootElement = document.getElementById("root");
+            //const contentText = <React.Fragment><span>Hello First Program</span><span><strong> BOLD ME</strong></span></React.Fragment>;
+            const contentText = <><span>Hello First Program</span><span><strong> BOLD ME</strong></span></>;
+            const classNameText = "new-class";
+
+            const props = {className:classNameText, children:contentText}
+            //const newElement = <div className={classNameText}>{contentText}</div>
+            const newElement = <div id="local-div" {...props} />
+            ReactDOM.render(newElement,rootElement);
+        </script>
+    </body>

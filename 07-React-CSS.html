@@ -1,0 +1,59 @@
+<!--
+02 - Convert the 01-BasicJS.html to React
+03 - Use Babel for learning purpose to convert the JSX to JavaScript that the browser can understand
+04 - Using Functions to pass custom span texts
+05 - Use PropTypes to handle field data type validations
+06 - Use TickTok to understand the React Rerender functionality - Compare using JS and JSX 
+07 - React CSS - using custom styles
+-->
+
+<body>
+    <div id="root"></div>
+    <script src="https://unpkg.com/react@17.0.0/umd/react.development.js">
+    </script>
+    <script src="https://unpkg.com/react-dom@17.0.0/umd/react-dom.development.js">
+    </script>
+    <script src="https://unpkg.com/@babel/standalone@7.17.0/babel.js">
+    </script>
+    <style>
+        .box {
+          border: 1px solid #333;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          text-align: center;
+        }
+        .box--large {
+          width: 270px;
+          height: 270px;
+        }
+        .box--medium {
+          width: 180px;
+          height: 180px;
+        }
+        .box--small {
+          width: 90px;
+          height: 90px;
+        }
+      </style>
+    <script type="text/babel">
+        const rootElem = document.getElementById("root");
+        function Box(props){
+            const boxCls = (props.size)?`box--${props.size}`:'';
+            return <div className={`box ${boxCls}`} style={{fontStyle:'italic',...props.bcColor}}>{props.text}</div>;
+        }
+        const element = (
+        <div>
+            <Box size="small" bcColor={{backgroundColor:'red'}} text="Custom React Small box Text" />
+            <div className="box box--small" style={{fontStyle:'italic',backgroundColor:'yellow'}}>Small box Text</div>
+
+            <Box size="medium" bcColor={{backgroundColor:'green'}} text="Custom React Medium box Text" />
+            <div className="box box--medium" style={{fontStyle:'italic',backgroundColor:'yellow'}}>Medium box Text</div>
+
+            <Box size="large" bcColor={{backgroundColor:'orange'}} text="Custom React Large box Text" />
+            <div className="box box--large" style={{fontStyle:'italic',backgroundColor:'yellow'}}>Large box Text</div>
+        </div>
+        );
+        ReactDOM.render(element,rootElem);
+    </script>
+</body>

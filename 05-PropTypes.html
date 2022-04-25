@@ -1,0 +1,55 @@
+<!--
+02 - Convert the 01-BasicJS.html to React
+03 - Use Babel for learning purpose to convert the JSX to JavaScript that the browser can understand
+04 - Using Functions to pass custom span texts
+05 - Use PropTypes to handle field data type validations
+-->
+
+<body>
+    <div id="root"></div>
+    <script src="https://unpkg.com/react@17.0.0/umd/react.development.js">
+    </script>
+    <script src="https://unpkg.com/react-dom@17.0.0/umd/react-dom.development.js">
+    </script>
+    <script src="https://unpkg.com/@babel/standalone@7.17.0/babel.js">
+    </script>
+    <script type="text/babel">
+        function ChildContent(props){
+            return <><span>{props.msg1}</span><span><b>{props.msg2}</b></span></>;
+        }
+
+       /* ChildContent.propTypes = {
+            msg1(props,propName,componentName){
+                if(typeof props[propName] !== 'string')
+                    return new Error("Error Type 1");
+            },
+            msg2(props,propName,componentName){
+                if(typeof props[propName] !== 'string')
+                    return new Error("Error Type 3");
+            }
+        };*/
+
+        
+        const PropType = {
+            string(props,propName,componentName){
+                if(typeof props[propName] !== "string")
+                    return new Error(`Error PropType at ${componentName}`);
+            }
+        }
+
+        ChildContent.propTypes ={
+            msg1 : PropType.string.isRequired,
+            msg2 : PropType.string.isRequired,
+        }
+        const rootElement = document.getElementById("root");
+        //const contentText = <React.Fragment><span>Hello First Program</span><span><strong> BOLD ME</strong></span></React.Fragment>;
+        //const contentText = childContent({msg1:"Hello First Program 1", msg2:"BOLD ME 1"});
+        const contentText = <ChildContent msg1={false}  />
+        const classNameText = "new-class";
+
+        const props = {className:classNameText, children:contentText}
+        //const newElement = <div className={classNameText}>{contentText}</div>
+        const newElement = <div id="local-div" {...props} />
+        ReactDOM.render(newElement,rootElement);
+    </script>
+</body>
