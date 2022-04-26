@@ -45,7 +45,12 @@ componentDidMount() {
         function App(){
 
             //states are managed independently of one another
-            const [name,setName] = React.useState(window.localStorage.getItem('name'));
+            const [name,setName] = React.useState(
+                //lazy initializer
+                ()=>{
+                    return window.localStorage.getItem('name') || '';
+                });
+            
             /*
                 const stateArray = React.useState('');
                 const name = stateArray[0];
@@ -66,7 +71,6 @@ componentDidMount() {
             [] - Run on first render
             */
             React.useEffect(()=>{
-                console.log("Ran");
                 window.localStorage.setItem('name',name);
             },[name]);
 
