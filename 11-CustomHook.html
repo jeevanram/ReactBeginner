@@ -1,0 +1,84 @@
+<!--
+02 - Convert the 01-BasicJS.html to React
+03 - Use Babel for learning purpose to convert the JSX to JavaScript that the browser can understand
+04 - Using Functions to pass custom span texts
+05 - Use PropTypes to handle field data type validations
+06 - Use TickTok to understand the React Rerender functionality - Compare using JS and JSX 
+07 - React CSS - using custom styles
+08 - React Event Handling
+09 - useState hook to maintain the state for a component
+10 - useEffect hook to perform side effects in function component
+11 - useCustomHook - Hooks are composable, hooks can contain other 
+     Do email validation and enter an email before the time expires
+-->
+
+<body>
+    <div id="root"></div>
+    <script src="https://unpkg.com/react@17.0.0/umd/react.development.js">
+    </script>
+    <script src="https://unpkg.com/react-dom@17.0.0/umd/react-dom.development.js">
+    </script>
+    <script src="https://unpkg.com/@babel/standalone@7.17.0/babel.js">
+    </script>
+    <script type="text/babel">
+        const rootElem = document.getElementById("root");
+        
+        const useInterval = (callback, delay) =>{
+
+            const savedCallback = React.useRef();
+
+            React.useEffect(()=>{
+                savedCallback.current = callback;
+            },[callback]);
+
+            React.useEffect(() =>{
+                function tick(){
+                    savedCallback.current();
+                }
+                if(delay !== null){
+                    let id = setInterval(tick, delay);
+                    return ()=> clearInterval(id);
+                }
+            },[delay]);
+        }
+
+        function App(){
+            const emailValidator = (email) =>{
+                let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                return  re.test(email);
+            }
+            const [emailValid,setEmailValid] = React.useState(false);
+
+            const emailReducer = (state,action)=>{
+                const isValid = emailValidator(action);
+                setEmailValid(isValid);
+                return action;
+            };
+           
+           const [email,setEmail] = React.useReducer(emailReducer,"");
+           const maxSeconds=30;
+           const [counter,setCounter] = React.useState(maxSeconds);
+            
+           //customHook
+           useInterval(()=>{
+               setCounter(counter-1);
+           }, 1000);
+
+           return(
+               <>
+               <div>
+                <input onChange={(e)=>{setEmail(e.target.value)}} disabled={counter<=0}
+                value={email} />
+                <button onClick={()=>{setCounter(0); alert(`Email added ${email}`);}}
+                disabled={!emailValid || counter <=0} type="submit">Press Me !</button>
+               </div>
+               <div>
+               {counter > 0 ? `you have ${counter} seconds to enter an email` : `Email entered or timer expired`} 
+               </div>
+               </>
+           );
+        }
+
+        ReactDOM.render(<App />,rootElem);
+    </script>
+</body>
